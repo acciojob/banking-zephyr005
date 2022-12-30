@@ -27,7 +27,7 @@ public class CurrentAccount extends BankAccount{
         for (int i = 0; i < 26; i++) {
             if (count[i] > max) {
                 max = count[i];
-                ch = (char)((int)'a' + i);
+                ch = (char)((int)'A' + i);
             }
         }
         return ch;
@@ -47,7 +47,7 @@ public class CurrentAccount extends BankAccount{
         }
 
         char ch_max = getMaxCountChar(count);
-        int maxCount = count[(int)ch_max - (int)'a'];
+        int maxCount = count[(int)ch_max - (int)'A'];
 
         // check if the result is possible or not
         if (maxCount > (N + 1) / 2)
@@ -67,7 +67,7 @@ public class CurrentAccount extends BankAccount{
             ind = ind + 2;
             maxCount--;
         }
-        count[(int)ch_max - (int)'a'] = 0;
+        count[(int)ch_max - (int)'A'] = 0;
 
         // now filling the other Chars, first filling the
         // even positions and then the odd positions
@@ -75,7 +75,7 @@ public class CurrentAccount extends BankAccount{
             while (count[i] > 0) {
                 ind = (ind >= N) ? 1 : ind;
                 res = res.substring(0, ind)
-                        + (char)((int)'a' + i)
+                        + (char)((int)'A' + i)
                         + res.substring(ind + 1);
                 ind += 2;
                 count[i]--;
