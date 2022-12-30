@@ -1,7 +1,7 @@
 package com.driver;
 
 public class CurrentAccount extends BankAccount{
-    String tradeLicenseId; //consists of Uppercase English characters only
+    private String tradeLicenseId; //consists of Uppercase English characters only
 
     public String getTradeLicenseId() {
         return tradeLicenseId;
@@ -43,7 +43,7 @@ public class CurrentAccount extends BankAccount{
             count[i] = 0;
         }
         for (char ch : S.toCharArray()) {
-            count[(int)ch - (int)'a']++;
+            count[(int)ch - (int)'A']++;
         }
 
         char ch_max = getMaxCountChar(count);
