@@ -2,7 +2,10 @@ package com.driver;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
         CurrentAccount account1 = new CurrentAccount("Ram",10000.00,"ABCDDFF");
         account1.validateLicenseId();
         System.out.println(account1.getTradeLicenseId());
