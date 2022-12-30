@@ -2,10 +2,6 @@ package com.driver;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main
         CurrentAccount account1 = new CurrentAccount("Ram",10000.00,"ABCDDFF");
         account1.validateLicenseId();
         System.out.println(account1.getTradeLicenseId());
@@ -20,6 +16,6 @@ public class Main {
         StudentAccount account3 = new StudentAccount("Raj Kumar",1000,"AccioJob");
 
         BankAccount account4 = new BankAccount("Kyle",1000,500);
-        System.out.println(account4.generateAccountNumber(6,83488));
+        System.out.println(account4.generateAccountNumber(6,16));
     }
 }
