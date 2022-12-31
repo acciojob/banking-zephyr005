@@ -67,7 +67,7 @@ public class BankAccount {
             start++;
         }
         if(ans == null){
-            throw new UserException("Account Number can not be generated");
+            throw new IllegalArgumentException("Account Number can not be generated");
         }
         else{
             return ans;
@@ -84,7 +84,7 @@ public class BankAccount {
         double remainingAmount = balance - amount;
 
         if(remainingAmount < minBalance){
-            throw new UserException("Insufficient Balance");
+            throw new IllegalArgumentException("Insufficient Balance");
         }
     }
 
