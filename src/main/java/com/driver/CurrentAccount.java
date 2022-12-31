@@ -1,7 +1,7 @@
 package com.driver;
 
 public class CurrentAccount extends BankAccount{
-    private String tradeLicenseId; //consists of Uppercase English characters only
+    String tradeLicenseId; //consists of Uppercase English characters only
 
     public String getTradeLicenseId() {
         return tradeLicenseId;
@@ -14,40 +14,46 @@ public class CurrentAccount extends BankAccount{
     public CurrentAccount(String name, double balance, String tradeLicenseId) throws Exception {
         // minimum balance is 5000 by default. If balance is less than 5000, throw "Insufficient Balance" exception
         super(name,balance,5000);
+        validateLicenseId();
         this.tradeLicenseId = tradeLicenseId;
 
-        if(balance < 5000){
-            throw new UserException("Insufficient Balance");
+        try{
+            if(balance < 5000){
+                throw new Exception("Insufficient Balance");
+            }
+        }
+        catch (Exception e){
+            System.out.println(e);
         }
     }
 
-    static char getMaxCountChar(int[] count){
+    static char getMaxCountChar(int[] charCount){
         int max = 0;
         char ch = 0;
         for (int i = 0; i < 26; i++) {
-            if (count[i] > max) {
-                max = count[i];
+            if (charCount[i] > max) {
+                max = charCount[i];
                 ch = (char)((int)'A' + i);
             }
         }
         return ch;
     }
 
-    static String rearrangeString(String S) {
-        int N = S.length();
+    static String rearrangeString(String tradeLicenseID) {
+        int N = tradeLicenseID.length();
         if (N == 0)
             return "";
 
-        int[] count = new int[26];
+        int[] charCount = new int[26];
         for (int i = 0; i < 26; i++) {
-            count[i] = 0;
+            charCount[i] = 0;
         }
-        for (char ch : S.toCharArray()) {
-            count[(int)ch - (int)'A']++;
+        for (char ch : tradeLicenseID.toCharArray()) {
+            charCount[(int)ch - (int)'A']++;
         }
 
-        char ch_max = getMaxCountChar(count);
-        int maxCount = count[(int)ch_max - (int)'A'];
+        char ch_max = getMaxCountChar(charCount);
+        int maxCount = charCount[(int)ch_max - (int)'A'];
 
         // check if the result is possible or not
         if (maxCount > (N + 1) / 2)
@@ -67,21 +73,31 @@ public class CurrentAccount extends BankAccount{
             ind = ind + 2;
             maxCount--;
         }
-        count[(int)ch_max - (int)'A'] = 0;
+        charCount[(int)ch_max - (int)'A'] = 0;
 
         // now filling the other Chars, first filling the
         // even positions and then the odd positions
         for (int i = 0; i < 26; i++) {
-            while (count[i] > 0) {
+            while (charCount[i] > 0) {
                 ind = (ind >= N) ? 1 : ind;
                 res = res.substring(0, ind)
                         + (char)((int)'A' + i)
                         + res.substring(ind + 1);
                 ind += 2;
-                count[i]--;
+                charCount[i]--;
             }
         }
         return res;
+    }
+
+    static boolean duplicateConsecutiveCharacterCheck(String tradeLicenseId){
+        int size = tradeLicenseId.length();
+        for(int i=1; i<size; i++){
+            if(tradeLicenseId.charAt(i) == tradeLicenseId.charAt(i-1)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void validateLicenseId() throws Exception {
@@ -91,12 +107,23 @@ public class CurrentAccount extends BankAccount{
         // If it is not possible, throw "Valid License can not be generated" Exception
         String str = tradeLicenseId;
 
-        // Function call
-        String res = rearrangeString(str);
-        if (res == "")
-            throw new UserException("Valid License can not be generated");
-        else
-            tradeLicenseId = res;
+        try {
+            if(duplicateConsecutiveCharacterCheck(tradeLicenseId)){
+
+                String res = rearrangeString(str);
+
+                if (res == "")
+                    throw new Exception("Valid License can not be generated");
+                else
+                    tradeLicenseId = res;
+            }
+            else{
+                return;
+            }
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
     }
 
 }

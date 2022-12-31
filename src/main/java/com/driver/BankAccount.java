@@ -1,13 +1,5 @@
 package com.driver;
 
-class UserException extends Exception {
-    public UserException(String s)
-    {
-        // Call constructor of parent Exception
-        super(s);
-    }
-}
-
 public class BankAccount {
 
     private String name;
@@ -48,30 +40,38 @@ public class BankAccount {
         //Each digit of an account number can lie between 0 and 9 (both inclusive)
         //Generate account number having given number of 'digits' such that the sum of digits is equal to 'sum'
         //If it is not possible, throw "Account Number can not be generated" exception
-        long start = (long) Math.pow(10, digits-1);
-        long end = (long) Math.pow(10, digits)-1;
-        String ans = null;
+        try{
+            long start = (long) Math.pow(10, digits-1);
+            long end = (long) Math.pow(10, digits)-1;
+            String ans = null;
 
-        while(start <= end) {
-            int currentSum = 0;
-            long temp = start;
-            while (temp != 0) {
-                currentSum += temp % 10;
-                temp /= 10;
-            }
+            while(start <= end) {
+                int currentSum = 0;
+                long temp = start;
+                while (temp != 0) {
+                    currentSum += temp % 10;
+                    temp /= 10;
+                }
 
-            if (currentSum == sum){
-                ans = String.valueOf(start);
-                break;
+                if (currentSum == sum){
+                    ans = String.valueOf(start);
+                    break;
+                }
+                start++;
             }
-            start++;
+            if(ans.equals(sum)){
+                return ans;
+            }
+            else{
+                throw new Exception("Account Number can not be generated");
+            }
         }
-        if(ans == null){
-            throw new IllegalArgumentException("Account Number can not be generated");
+
+        catch (Exception e){
+            System.out.println(e);
         }
-        else{
-            return ans;
-        }
+
+        return null;
     }
 
     public void deposit(double amount) {
@@ -81,10 +81,17 @@ public class BankAccount {
 
     public void withdraw(double amount) throws Exception {
         // Remember to throw "Insufficient Balance" exception, if the remaining amount would be less than minimum balance
-        double remainingAmount = balance - amount;
 
-        if(remainingAmount < minBalance){
-            throw new IllegalArgumentException("Insufficient Balance");
+        try{
+            if((balance-amount) >= minBalance){
+                balance -= amount;
+            }
+            else{
+                throw new Exception("Insufficient Balance");
+            }
+        }
+        catch (Exception e){
+            System.out.println(e);
         }
     }
 
